@@ -1,0 +1,366 @@
+{
+  "resumen_general": {
+    "total_preguntas": 24,
+    "preguntas_con_respuesta": 20,
+    "preguntas_sin_respuesta": 4,
+    "preguntas_conflicto": 2,
+    "preguntas_versiones": 3,
+    "total_fallos_clasificados": {
+      "fallos_recuperacion": 0,
+      "fallos_generacion": 0,
+      "total_fallos": 0
+    }
+  },
+  "metricas_tabla_7_2": {
+    "recall@1": 0.95,
+    "recall@3": 1.0,
+    "precision_de_cita": 1.0,
+    "fidelidad": 1.0,
+    "abstencion_correcta": 1.0,
+    "tasa_falsa_abstencion": 0.0,
+    "manejo_conflicto_y_vigencia": 1.0
+  },
+  "detalles_por_pregunta": [
+    {
+      "id": "GS-01",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Cuál es el valor mínimo requerido para la señal DOC_AUT de autenticidad documental?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[POL-DEC v2, §3]",
+        "[CAT-SEN v3, §2]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §3]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 1.23
+    },
+    {
+      "id": "GS-02",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué ocurre si la señal BIO_ROSTRO queda en 70 puntos?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[POL-DEC v2, §3]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §3]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.6
+    },
+    {
+      "id": "GS-03",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Cuáles son las decisiones disponibles para un operador en su bandeja de revisión?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[MAN-REV v1, §3]",
+        "[POL-DEC v1, §2]"
+      ],
+      "citas_esperadas": "[MAN-REV v1, §3]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.58
+    },
+    {
+      "id": "GS-04",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Puede el asistente de IA aprobar o rechazar un caso?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[FAQ-OPE v2, §1]",
+        "[MAN-REV v1, §3]"
+      ],
+      "citas_esperadas": "[FAQ-OPE v2, §1] / [MAN-REV v1, §3]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.53
+    },
+    {
+      "id": "GS-05",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué debe hacer el operador si el valor de la señal DOC_LEG es inferior a 50?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[CAT-SEN v3, §2]"
+      ],
+      "citas_esperadas": "[CAT-SEN v3, §2]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.6
+    },
+    {
+      "id": "GS-06",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Cuántas solicitudes de antecedentes puede registrar un operador sobre un mismo caso?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[PRO-ANT v1, §4]"
+      ],
+      "citas_esperadas": "[PRO-ANT v1, §4]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.59
+    },
+    {
+      "id": "GS-07",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Se puede solicitar antecedentes sobre un caso aprobado automáticamente?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "conflicto_detectado",
+      "citas_emitidas": [
+        "[MAN-REV v1, §1]",
+        "[POL-DEC v2, §2]"
+      ],
+      "citas_esperadas": "[PRO-ANT v1, §4]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.55
+    },
+    {
+      "id": "GS-08",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué cuatro componentes deben acompañar el puntaje de confianza en la interfaz?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[POL-DEC v2, §7]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §7]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.57
+    },
+    {
+      "id": "GS-09",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué indica la señal de fraude FRA_MEMORIA?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[CAT-SEN v3, §6]"
+      ],
+      "citas_esperadas": "[CAT-SEN v3, §6]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.5
+    },
+    {
+      "id": "GS-10",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué indica la señal de fraude FRA_SINTETICO?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[CAT-SEN v3, §6]"
+      ],
+      "citas_esperadas": "[CAT-SEN v3, §6]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.5
+    },
+    {
+      "id": "GS-11",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué contenido obligatorio debe incluir toda solicitud de antecedentes?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[PRO-ANT v1, §2]",
+        "[MAN-REV v1, §3]"
+      ],
+      "citas_esperadas": "[PRO-ANT v1, §2]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.55
+    },
+    {
+      "id": "GS-12",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué sucede cuando la decisión del operador difiere de la sugerida por MIRA?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[MAN-REV v1, §4]",
+        "[POL-DEC v2, §1]"
+      ],
+      "citas_esperadas": "[MAN-REV v1, §4]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.57
+    },
+    {
+      "id": "GS-13",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Cómo indica la bandeja de revisión que a un caso le queda poco plazo?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[MAN-REV v1, §6]",
+        "[PRO-ANT v1, §5]"
+      ],
+      "citas_esperadas": "[MAN-REV v1, §6]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.58
+    },
+    {
+      "id": "GS-14",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué debe hacer un operador si una boleta trae un texto que parece una instrucción para el sistema?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[FAQ-OPE v2, §6]",
+        "[POL-DEC v2, §7]"
+      ],
+      "citas_esperadas": "[FAQ-OPE v2, §6]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.62
+    },
+    {
+      "id": "GS-15",
+      "tipo": "con_respuesta",
+      "pregunta": "¿Qué mide la señal CRUCE_MONTO y qué acción corresponde si su valor es bajo?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "responde_con_evidencia",
+      "citas_emitidas": [
+        "[CAT-SEN v3, §5]"
+      ],
+      "citas_esperadas": "[CAT-SEN v3, §5]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.59
+    },
+    {
+      "id": "GS-16",
+      "tipo": "sin_respuesta",
+      "pregunta": "¿Cuál es el procedimiento interno para solicitar días de vacaciones o permisos administrativos?",
+      "debe_responder": false,
+      "acierto": true,
+      "estado_asistente": "abstencion",
+      "citas_emitidas": [],
+      "citas_esperadas": null,
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.81
+    },
+    {
+      "id": "GS-17",
+      "tipo": "sin_respuesta",
+      "pregunta": "¿Cuál es la tasa de interés mensual cobrada por Banco Mirador del Sur en créditos de consumo?",
+      "debe_responder": false,
+      "acierto": true,
+      "estado_asistente": "abstencion",
+      "citas_emitidas": [],
+      "citas_esperadas": null,
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.74
+    },
+    {
+      "id": "GS-18",
+      "tipo": "sin_respuesta",
+      "pregunta": "¿Cuál es la posología y dosis recomendada de paracetamol según los médicos de Clínica Bahía Serena?",
+      "debe_responder": false,
+      "acierto": true,
+      "estado_asistente": "abstencion",
+      "citas_emitidas": [],
+      "citas_esperadas": null,
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.72
+    },
+    {
+      "id": "GS-19",
+      "tipo": "sin_respuesta",
+      "pregunta": "¿Qué modelo fundacional de red neuronal convolucional se utiliza para el OCR de boletas?",
+      "debe_responder": false,
+      "acierto": true,
+      "estado_asistente": "abstencion",
+      "citas_emitidas": [],
+      "citas_esperadas": null,
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.62
+    },
+    {
+      "id": "GS-20",
+      "tipo": "conflicto_vigentes",
+      "pregunta": "¿Con qué puntaje de confianza se aprueba automáticamente un caso en MIRA?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "conflicto_detectado",
+      "citas_emitidas": [
+        "[MAN-REV v1, §1]",
+        "[POL-DEC v2, §2]"
+      ],
+      "citas_esperadas": "[MAN-REV v1, §1] y [POL-DEC v2, §2]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.56
+    },
+    {
+      "id": "GS-21",
+      "tipo": "conflicto_vigentes",
+      "pregunta": "¿Por qué se derivó a revisión el caso C-012 si su puntaje es 86?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "conflicto_detectado",
+      "citas_emitidas": [
+        "[POL-DEC v2, §5]",
+        "[Base de Datos: cambios_umbral CU-001]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §2] / [POL-DEC v2, §5] y [Base de Datos: cambios_umbral CU-001]",
+      "fallo_clasificado": null,
+      "tiempo_ms": 6.71
+    },
+    {
+      "id": "GS-22",
+      "tipo": "distinta_entre_versiones",
+      "pregunta": "¿Una señal de fraude activa resta 20 puntos al puntaje de confianza?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "version_vigente",
+      "citas_emitidas": [
+        "[POL-DEC v2, §4]",
+        "[POL-DEC v1, §4]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §4] (mencionando [POL-DEC v1, §4])",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.58
+    },
+    {
+      "id": "GS-23",
+      "tipo": "distinta_entre_versiones",
+      "pregunta": "¿Quién tiene autorización para modificar los umbrales de decisión de una organización cliente?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "version_vigente",
+      "citas_emitidas": [
+        "[POL-DEC v2, §5]",
+        "[POL-DEC v1, §3]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §5] / [FAQ-OPE v2, §4] (mencionando [POL-DEC v1, §3])",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.61
+    },
+    {
+      "id": "GS-24",
+      "tipo": "distinta_entre_versiones",
+      "pregunta": "¿Qué ocurre si un módulo de análisis falla y no entrega su señal?",
+      "debe_responder": true,
+      "acierto": true,
+      "estado_asistente": "version_vigente",
+      "citas_emitidas": [
+        "[POL-DEC v2, §6]",
+        "[POL-DEC v1, §5]"
+      ],
+      "citas_esperadas": "[POL-DEC v2, §6] (mencionando [POL-DEC v1, §5])",
+      "fallo_clasificado": null,
+      "tiempo_ms": 0.57
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "mira-frontend-f1",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node tests/e2e_bandeja_test.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vite": "^5.4.8"
+  }
+}

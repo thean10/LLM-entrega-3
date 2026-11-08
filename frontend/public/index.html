@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIRA v3.0 — Asistente de Revisión (RAG + MCP)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#1e1b4b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans overflow-hidden">
+
+  <!-- BARRA SUPERIOR: DEMO D1-D8 & SELECTOR DE TENANT -->
+  <header class="bg-slate-950 border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0 shadow-lg z-30">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center font-display font-black text-white text-base shadow-md shadow-indigo-500/20">
+        M
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <span class="font-display font-extrabold text-lg tracking-tight text-white">MIRA</span>
+          <span class="text-[10px] font-mono uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-700/50">
+            CU-1 · RAG & MCP v3.0
+          </span>
+        </div>
+        <p class="text-[11px] text-slate-400">Asistente del Operador de Revisión · Acceso Gobernado y Evidencia Verificable</p>
+      </div>
+    </div>
+
+    <!-- BOTONERA GUION DEMO D1 a D8 -->
+    <div class="flex items-center space-x-1 overflow-x-auto py-1 px-2 bg-slate-900/90 rounded-xl border border-slate-800/80">
+      <span class="text-[10px] font-bold text-slate-400 px-2 uppercase tracking-wider">Demo Rúbrica:</span>
+      <button onclick="ejecutarDemo('D1')" class="px-2 py-1 rounded bg-slate-800 hover:bg-indigo-600 text-[11px] font-mono text-slate-200 transition" title="D1: Cita abierta y evidencia verificable">D1 Cita</button>
+      <button onclick="ejecutarDemo('D2')" class="px-2 py-1 rounded bg-slate-800 hover:bg-amber-600 text-[11px] font-mono text-slate-200 transition" title="D2: Abstención ante información fuera de corpus (PR-3)">D2 Abstención</button>
+      <button onclick="ejecutarDemo('D3')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-600 text-[11px] font-mono text-slate-200 transition" title="D3: Conflicto entre fuentes vigentes (PR-4)">D3 Conflicto</button>
+      <button onclick="ejecutarDemo('D4')" class="px-2 py-1 rounded bg-slate-800 hover:bg-blue-600 text-[11px] font-mono text-slate-200 transition" title="D4: Traza MCP de herramientas a base de datos">D4 Traza</button>
+      <button onclick="ejecutarDemo('D5')" class="px-2 py-1 rounded bg-slate-800 hover:bg-emerald-600 text-[11px] font-mono text-slate-200 transition" title="D5: Efecto verificado con confirmación humana (PR-6)">D5 Efecto</button>
+      <button onclick="ejecutarDemo('D6')" class="px-2 py-1 rounded bg-slate-800 hover:bg-purple-600 text-[11px] font-mono text-slate-200 transition" title="D6: Riesgo contenido (Inyección en boleta C-014 neutralizada)">D6 Riesgo</button>
+      <button onclick="ejecutarDemo('D7')" class="px-2 py-1 rounded bg-slate-800 hover:bg-cyan-600 text-[11px] font-mono text-slate-200 transition" title="D7: Cliente externo y aislamiento multitenant (PR-7)">D7 Aislamiento</button>
+      <button onclick="ejecutarDemo('D8')" class="px-2 py-1 rounded bg-slate-800 hover:bg-teal-600 text-[11px] font-mono text-slate-200 transition" title="D8: Pregunta no prevista sin inventar">D8 No Prevista</button>
+    </div>
+
+    <!-- SELECTOR DE USUARIO Y AISLAMIENTO MULTITENANT (PR-7) -->
+    <div class="flex items-center space-x-2">
+      <label class="text-[11px] text-slate-400 font-medium">Sesión:</label>
+      <select id="user-select" onchange="cambiarUsuario()" class="bg-slate-900 border border-slate-700 text-xs text-indigo-300 font-medium rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+        <option value="U-01" data-org="ORG-01" data-rol="operador">Paula Rojas (Operador · Seguros Cordillera ORG-01)</option>
+        <option value="U-02" data-org="ORG-01" data-rol="supervisor">Andrés Muñoz (Supervisor · Seguros Cordillera ORG-01)</option>
+        <option value="U-04" data-org="ORG-02" data-rol="operador">Javiera Soto (Operador · Clínica Bahía Serena ORG-02)</option>
+        <option value="U-06" data-org="ORG-03" data-rol="operador">Rocío Pinto (Operador · Banco Mirador ORG-03)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- CUERPO PRINCIPAL CON 2 PANELES: BANDEJA Y CHAT -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- PANEL LATERAL IZQUIERDO: BANDEJA DE CASOS DE LA ORGANIZACIÓN -->
+    <aside class="w-80 bg-slate-950/70 border-r border-slate-800/80 flex flex-col shrink-0">
+      <div class="p-3 border-b border-slate-800/80 flex items-center justify-between">
+        <div>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 font-display">Bandeja de Revisión</h2>
+          <p id="org-banner" class="text-[11px] text-indigo-400 font-semibold mt-0.5">Seguros Cordillera Austral (ORG-01)</p>
+        </div>
+        <span id="case-count" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
+          8 casos
+        </span>
+      </div>
+
+      <!-- LISTA DE CASOS -->
+      <div id="cases-list" class="flex-1 overflow-y-auto p-2 space-y-1.5">
+        <!-- Render dinámico de casos -->
+      </div>
+
+      <!-- BOTÓN VER EVALUACIÓN Y MÉTRICAS -->
+      <div class="p-3 border-t border-slate-800/80 bg-slate-950">
+        <button onclick="abrirModalEvaluacion()" class="w-full py-2 px-3 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-700/60 text-xs font-semibold text-indigo-200 flex items-center justify-center space-x-2 transition">
+          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          <span>Ver Métricas Golden Set (100%)</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL: CONVERSACIÓN CON EL ASISTENTE -->
+    <main class="flex-1 flex flex-col bg-slate-900 relative">
+
+      <!-- HILO DE CONVERSACIÓN -->
+      <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
+        <!-- Mensaje de bienvenida inicial -->
+        <div class="flex items-start space-x-3 max-w-3xl">
+          <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xs shrink-0 shadow-md">
+            AI
+          </div>
+          <div class="flex-1 bg-slate-800/90 border border-slate-700/80 rounded-2xl rounded-tl-sm p-4 text-sm shadow-md">
+            <div class="flex items-center justify-between mb-2 pb-2 border-b border-slate-700/60">
+              <span class="font-bold text-white flex items-center space-x-2">
+                <span>Asistente MIRA</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono font-medium">PR-1 a PR-7 Activos</span>
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono">Listo para revisión</span>
+            </div>
+            <p class="text-slate-300 leading-relaxed">
+              Hola, soy el <strong>Asistente del Operador de Revisión</strong> de MIRA. Puedo explicarle por qué un caso fue derivado a su bandeja, contrastar las señales analíticas con las políticas vigentes (POL-DEC, CAT-SEN, PRO-ANT, MAN-REV), consultar los datos vivos del expediente mediante herramientas MCP y preparar solicitudes de antecedentes con confirmación humana explícita.
+            </p>
+            <div class="mt-3 p-2.5 rounded-lg bg-slate-900/60 border border-slate-800 text-xs text-slate-400 flex items-center space-x-2">
+              <svg class="w-4 h-4 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>Seleccione un caso de la izquierda o use los accesos directos <strong>D1 a D8</strong> arriba para recorrer la rúbrica de evaluación.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULARIO DE ENTRADA DE CONSULTA -->
+      <div class="p-4 bg-slate-950/90 border-t border-slate-800/80 shrink-0">
+        <form id="chat-form" onsubmit="enviarMensaje(event)" class="max-w-4xl mx-auto flex items-center space-x-3">
+          <div class="relative flex-1">
+            <input
+              type="text"
+              id="query-input"
+              placeholder="Pregunte sobre un caso (ej: ¿Por qué se derivó C-012?) o sobre una política..."
+              class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition shadow-inner font-sans"
+              autocomplete="off"
+            />
+          </div>
+          <button
+            type="submit"
+            id="send-btn"
+            class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center space-x-2 shrink-0 disabled:opacity-50"
+          >
+            <span>Consultar</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: INSPECTOR DE CITAS DOCUMENTALES (D1) -->
+  <div id="citation-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <h3 id="modal-cite-title" class="text-base font-bold text-white font-display">Fragmento Documental</h3>
+        </div>
+        <button onclick="cerrarModalCita()" class="text-slate-400 hover:text-white text-sm p-1 rounded-lg hover:bg-slate-800 transition">✕</button>
+      </div>
+      <div class="mt-3 flex items-center space-x-2 text-xs font-mono">
+        <span id="modal-cite-doc" class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">DOC</span>
+        <span id="modal-cite-sec" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">§X</span>
+        <span id="modal-cite-status" class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">Vigente</span>
+        <span id="modal-cite-date" class="text-slate-400">Vigencia</span>
+      </div>
+      <div id="modal-cite-content" class="mt-4 p-4 rounded-xl bg-slate-950 border border-slate-800 text-sm text-slate-300 font-sans leading-relaxed overflow-y-auto whitespace-pre-wrap">
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+        <button onclick="cerrarModalCita()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-white transition">Cerrar Inspector</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DASHBOARD DE EVALUACIÓN Y MÉTRICAS GOLDEN SET -->
+  <div id="eval-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-4xl w-full p-6 shadow-2xl flex flex-col max-h-[90vh]">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h3 class="text-lg font-bold text-white font-display">Evaluación Automatizada y Métricas del RAG (Tabla 7.2)</h3>
+          <p class="text-xs text-slate-400">Resultados consolidados sobre el Golden Set de 24 preguntas y experimento de fragmentación</p>
+        </div>
+        <button onclick="cerrarModalEvaluacion()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">✕</button>
+      </div>
+
+      <!-- CARDS DE MÉTRICAS CLAVE -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 my-4">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+          <p class="text-[10px] uppercase font-bold text-slate-400">Recall@3</p>
+          <p class="text-2xl font-black text-emerald-400 font-mono mt-1">100.0 %</p>
+          <p class="text-[10px] text-slate-500">Recuperación fragmento</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+          <p class="text-[10px] uppercase font-bold text-slate-400">Precisión Cita</p>
+          <p class="text-2xl font-black text-indigo-400 font-mono mt-1">100.0 %</p>
+          <p class="text-[10px] text-slate-500">33 / 33 citas correctas</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+          <p class="text-[10px] uppercase font-bold text-slate-400">Fidelidad</p>
+          <p class="text-2xl font-black text-sky-400 font-mono mt-1">100.0 %</p>
+          <p class="text-[10px] text-slate-500">Sin alucinaciones</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+          <p class="text-[10px] uppercase font-bold text-slate-400">Abstención Correcta</p>
+          <p class="text-2xl font-black text-amber-400 font-mono mt-1">100.0 %</p>
+          <p class="text-[10px] text-slate-500">Principio PR-3</p>
+        </div>
+      </div>
+
+      <!-- TABLA COMPARATIVA EXPERIMENTO DE FRAGMENTACIÓN -->
+      <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80 mb-4">
+        <h4 class="text-xs font-bold text-white mb-2 flex items-center space-x-2">
+          <span>Experimento Comparativo de Fragmentación (Rúbrica C3)</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">Ganador: Semántica</span>
+        </h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="text-slate-400 border-b border-slate-800">
+                <th class="py-1">Estrategia</th>
+                <th class="py-1">Fragmentos</th>
+                <th class="py-1">Tokens Prom.</th>
+                <th class="py-1">Recall@1</th>
+                <th class="py-1">Recall@3</th>
+                <th class="py-1">Integridad Cláusulas</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-slate-300">
+              <tr class="bg-indigo-950/30 font-semibold text-indigo-200">
+                <td class="py-1.5">A. Semántica (Secciones)</td>
+                <td class="py-1.5">41</td>
+                <td class="py-1.5">81.2</td>
+                <td class="py-1.5 text-emerald-400">95.0 %</td>
+                <td class="py-1.5 text-emerald-400">100.0 %</td>
+                <td class="py-1.5 text-emerald-400">Tablas e ítems íntegros</td>
+              </tr>
+              <tr class="text-slate-400">
+                <td class="py-1.5">B. Ventana Fija (80 words)</td>
+                <td class="py-1.5">39</td>
+                <td class="py-1.5">98.3</td>
+                <td class="py-1.5">90.0 %</td>
+                <td class="py-1.5">100.0 %</td>
+                <td class="py-1.5 text-rose-400">Cortes a mitad de tabla</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DESGLOSE DE PREGUNTAS DEL GOLDEN SET -->
+      <div class="flex-1 overflow-y-auto border border-slate-800 rounded-xl p-2 bg-slate-950">
+        <h4 class="text-xs font-bold text-slate-400 px-2 py-1 uppercase tracking-wider">Preguntas del Golden Set Evaluadas</h4>
+        <div id="golden-set-list" class="space-y-1.5 mt-1 text-xs">
+          <!-- Inyectado dinámicamente -->
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+        <button onclick="cerrarModalEvaluacion()" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,556 @@
+{
+  "estrategia_semantica": {
+    "estrategia": "Semántica por Secciones",
+    "indice": "semantic_index.json",
+    "total_fragmentos": 41,
+    "promedio_tokens_fragmento": 81.2,
+    "recall@1": 0.95,
+    "recall@3": 1.0,
+    "recall@5": 1.0,
+    "aciertos_at_1": 19,
+    "aciertos_at_3": 20,
+    "aciertos_at_5": 20,
+    "total_preguntas_evaluadas": 20,
+    "detalles": [
+      {
+        "id": "GS-01",
+        "pregunta": "¿Cuál es el valor mínimo requerido para la señal DOC_AUT de autenticidad documental?",
+        "esperado": "POL-DEC-v2-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, §3]",
+          "[CAT-SEN v3, §2]",
+          "[CAT-SEN v3, §1]"
+        ]
+      },
+      {
+        "id": "GS-02",
+        "pregunta": "¿Qué ocurre si la señal BIO_ROSTRO queda en 70 puntos?",
+        "esperado": "POL-DEC-v2-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, §3]",
+          "[POL-DEC v1, §4]",
+          "[CAT-SEN v3, §1]"
+        ]
+      },
+      {
+        "id": "GS-03",
+        "pregunta": "¿Cuáles son las decisiones disponibles para un operador en su bandeja de revisión?",
+        "esperado": "MAN-REV-v1-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[MAN-REV v1, §3]",
+          "[POL-DEC v1, §2]",
+          "[FAQ-OPE v2, §1]"
+        ]
+      },
+      {
+        "id": "GS-04",
+        "pregunta": "¿Puede el asistente de IA aprobar o rechazar un caso?",
+        "esperado": "FAQ-OPE-v2-S1 / MAN-REV-v1-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[FAQ-OPE v2, §1]",
+          "[MAN-REV v1, §3]",
+          "[PRO-ANT v1, §4]"
+        ]
+      },
+      {
+        "id": "GS-05",
+        "pregunta": "¿Qué debe hacer el operador si el valor de la señal DOC_LEG es inferior a 50?",
+        "esperado": "CAT-SEN-v3-S2",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, §2]",
+          "[CAT-SEN v3, §4]",
+          "[CAT-SEN v3, §1]"
+        ]
+      },
+      {
+        "id": "GS-06",
+        "pregunta": "¿Cuántas solicitudes de antecedentes puede registrar un operador sobre un mismo caso?",
+        "esperado": "PRO-ANT-v1-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[PRO-ANT v1, §4]",
+          "[PRO-ANT v1, §3]",
+          "[MAN-REV v1, §3]"
+        ]
+      },
+      {
+        "id": "GS-07",
+        "pregunta": "¿Se puede solicitar antecedentes sobre un caso aprobado automáticamente?",
+        "esperado": "PRO-ANT-v1-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[PRO-ANT v1, §4]",
+          "[FAQ-OPE v2, §1]",
+          "[PRO-ANT v1, §1]"
+        ]
+      },
+      {
+        "id": "GS-08",
+        "pregunta": "¿Qué cuatro componentes deben acompañar el puntaje de confianza en la interfaz?",
+        "esperado": "POL-DEC-v2-S7",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, §7]",
+          "[POL-DEC v2, §1]",
+          "[POL-DEC v1, §2]"
+        ]
+      },
+      {
+        "id": "GS-09",
+        "pregunta": "¿Qué indica la señal de fraude FRA_MEMORIA?",
+        "esperado": "CAT-SEN-v3-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, §6]",
+          "[CAT-SEN v3, §1]",
+          "[POL-DEC v2, §4]"
+        ]
+      },
+      {
+        "id": "GS-10",
+        "pregunta": "¿Qué indica la señal de fraude FRA_SINTETICO?",
+        "esperado": "CAT-SEN-v3-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, §6]",
+          "[CAT-SEN v3, §1]",
+          "[POL-DEC v2, §4]"
+        ]
+      },
+      {
+        "id": "GS-11",
+        "pregunta": "¿Qué contenido obligatorio debe incluir toda solicitud de antecedentes?",
+        "esperado": "PRO-ANT-v1-S2",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[PRO-ANT v1, §2]",
+          "[MAN-REV v1, §3]",
+          "[PRO-ANT v1, §1]"
+        ]
+      },
+      {
+        "id": "GS-12",
+        "pregunta": "¿Qué sucede cuando la decisión del operador difiere de la sugerida por MIRA?",
+        "esperado": "MAN-REV-v1-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[MAN-REV v1, §4]",
+          "[POL-DEC v2, §1]",
+          "[POL-DEC v1, §1]"
+        ]
+      },
+      {
+        "id": "GS-13",
+        "pregunta": "¿Cómo indica la bandeja de revisión que a un caso le queda poco plazo?",
+        "esperado": "MAN-REV-v1-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[MAN-REV v1, §6]",
+          "[PRO-ANT v1, §5]",
+          "[MAN-REV v1, §1]"
+        ]
+      },
+      {
+        "id": "GS-14",
+        "pregunta": "¿Qué debe hacer un operador si una boleta trae un texto que parece una instrucción para el sistema?",
+        "esperado": "FAQ-OPE-v2-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[FAQ-OPE v2, §6]",
+          "[POL-DEC v2, §7]",
+          "[PRO-ANT v1, §2]"
+        ]
+      },
+      {
+        "id": "GS-15",
+        "pregunta": "¿Qué mide la señal CRUCE_MONTO y qué acción corresponde si su valor es bajo?",
+        "esperado": "CAT-SEN-v3-S5",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, §5]",
+          "[CAT-SEN v3, §4]",
+          "[CAT-SEN v3, §1]"
+        ]
+      },
+      {
+        "id": "GS-20",
+        "pregunta": "¿Con qué puntaje de confianza se aprueba automáticamente un caso en MIRA?",
+        "esperado": "MAN-REV-v1-S1 / POL-DEC-v2-S2",
+        "hit@1": false,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, §1]",
+          "[POL-DEC v1, §1]",
+          "[MAN-REV v1, §1]"
+        ]
+      },
+      {
+        "id": "GS-21",
+        "pregunta": "¿Por qué se derivó a revisión el caso C-012 si su puntaje es 86?",
+        "esperado": "POL-DEC-v2-S2 / POL-DEC-v2-S5 / BD-CU-001",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, §2]",
+          "[POL-DEC v2, §7]",
+          "[POL-DEC v2, §4]"
+        ]
+      },
+      {
+        "id": "GS-22",
+        "pregunta": "¿Una señal de fraude activa resta 20 puntos al puntaje de confianza?",
+        "esperado": "POL-DEC-v2-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v1, §4]",
+          "[POL-DEC v2, §4]",
+          "[FAQ-OPE v2, §2]"
+        ]
+      },
+      {
+        "id": "GS-23",
+        "pregunta": "¿Quién tiene autorización para modificar los umbrales de decisión de una organización cliente?",
+        "esperado": "POL-DEC-v2-S5 / FAQ-OPE-v2-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[FAQ-OPE v2, §4]",
+          "[POL-DEC v1, §3]",
+          "[POL-DEC v1, §1]"
+        ]
+      },
+      {
+        "id": "GS-24",
+        "pregunta": "¿Qué ocurre si un módulo de análisis falla y no entrega su señal?",
+        "esperado": "POL-DEC-v2-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, §6]",
+          "[POL-DEC v1, §5]",
+          "[CAT-SEN v3, §1]"
+        ]
+      }
+    ]
+  },
+  "estrategia_fija": {
+    "estrategia": "Ventana Fija (Longitud Fija)",
+    "indice": "fixed_index.json",
+    "total_fragmentos": 39,
+    "promedio_tokens_fragmento": 98.3,
+    "recall@1": 0.9,
+    "recall@3": 1.0,
+    "recall@5": 1.0,
+    "aciertos_at_1": 18,
+    "aciertos_at_3": 20,
+    "aciertos_at_5": 20,
+    "total_preguntas_evaluadas": 20,
+    "detalles": [
+      {
+        "id": "GS-01",
+        "pregunta": "¿Cuál es el valor mínimo requerido para la señal DOC_AUT de autenticidad documental?",
+        "esperado": "POL-DEC-v2-S3",
+        "hit@1": false,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, Ventana-2]",
+          "[POL-DEC v2, Ventana-4]",
+          "[POL-DEC v2, Ventana-7]"
+        ]
+      },
+      {
+        "id": "GS-02",
+        "pregunta": "¿Qué ocurre si la señal BIO_ROSTRO queda en 70 puntos?",
+        "esperado": "POL-DEC-v2-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v1, Ventana-3]",
+          "[POL-DEC v2, Ventana-4]",
+          "[POL-DEC v2, Ventana-3]"
+        ]
+      },
+      {
+        "id": "GS-03",
+        "pregunta": "¿Cuáles son las decisiones disponibles para un operador en su bandeja de revisión?",
+        "esperado": "MAN-REV-v1-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[MAN-REV v1, Ventana-4]",
+          "[FAQ-OPE v2, Ventana-1]",
+          "[MAN-REV v1, Ventana-3]"
+        ]
+      },
+      {
+        "id": "GS-04",
+        "pregunta": "¿Puede el asistente de IA aprobar o rechazar un caso?",
+        "esperado": "FAQ-OPE-v2-S1 / MAN-REV-v1-S3",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[FAQ-OPE v2, Ventana-1]",
+          "[MAN-REV v1, Ventana-3]",
+          "[MAN-REV v1, Ventana-4]"
+        ]
+      },
+      {
+        "id": "GS-05",
+        "pregunta": "¿Qué debe hacer el operador si el valor de la señal DOC_LEG es inferior a 50?",
+        "esperado": "CAT-SEN-v3-S2",
+        "hit@1": false,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, Ventana-7]",
+          "[CAT-SEN v3, Ventana-5]",
+          "[CAT-SEN v3, Ventana-6]"
+        ]
+      },
+      {
+        "id": "GS-06",
+        "pregunta": "¿Cuántas solicitudes de antecedentes puede registrar un operador sobre un mismo caso?",
+        "esperado": "PRO-ANT-v1-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[PRO-ANT v1, Ventana-4]",
+          "[PRO-ANT v1, Ventana-3]",
+          "[MAN-REV v1, Ventana-4]"
+        ]
+      },
+      {
+        "id": "GS-07",
+        "pregunta": "¿Se puede solicitar antecedentes sobre un caso aprobado automáticamente?",
+        "esperado": "PRO-ANT-v1-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[PRO-ANT v1, Ventana-4]",
+          "[FAQ-OPE v2, Ventana-1]",
+          "[MAN-REV v1, Ventana-4]"
+        ]
+      },
+      {
+        "id": "GS-08",
+        "pregunta": "¿Qué cuatro componentes deben acompañar el puntaje de confianza en la interfaz?",
+        "esperado": "POL-DEC-v2-S7",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, Ventana-7]",
+          "[POL-DEC v1, Ventana-1]",
+          "[POL-DEC v2, Ventana-1]"
+        ]
+      },
+      {
+        "id": "GS-09",
+        "pregunta": "¿Qué indica la señal de fraude FRA_MEMORIA?",
+        "esperado": "CAT-SEN-v3-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, Ventana-7]",
+          "[CAT-SEN v3, Ventana-1]",
+          "[POL-DEC v2, Ventana-7]"
+        ]
+      },
+      {
+        "id": "GS-10",
+        "pregunta": "¿Qué indica la señal de fraude FRA_SINTETICO?",
+        "esperado": "CAT-SEN-v3-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, Ventana-1]",
+          "[CAT-SEN v3, Ventana-7]",
+          "[POL-DEC v2, Ventana-7]"
+        ]
+      },
+      {
+        "id": "GS-11",
+        "pregunta": "¿Qué contenido obligatorio debe incluir toda solicitud de antecedentes?",
+        "esperado": "PRO-ANT-v1-S2",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[PRO-ANT v1, Ventana-1]",
+          "[PRO-ANT v1, Ventana-2]",
+          "[MAN-REV v1, Ventana-4]"
+        ]
+      },
+      {
+        "id": "GS-12",
+        "pregunta": "¿Qué sucede cuando la decisión del operador difiere de la sugerida por MIRA?",
+        "esperado": "MAN-REV-v1-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[MAN-REV v1, Ventana-4]",
+          "[MAN-REV v1, Ventana-5]",
+          "[POL-DEC v2, Ventana-1]"
+        ]
+      },
+      {
+        "id": "GS-13",
+        "pregunta": "¿Cómo indica la bandeja de revisión que a un caso le queda poco plazo?",
+        "esperado": "MAN-REV-v1-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[MAN-REV v1, Ventana-6]",
+          "[MAN-REV v1, Ventana-5]",
+          "[PRO-ANT v1, Ventana-4]"
+        ]
+      },
+      {
+        "id": "GS-14",
+        "pregunta": "¿Qué debe hacer un operador si una boleta trae un texto que parece una instrucción para el sistema?",
+        "esperado": "FAQ-OPE-v2-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[FAQ-OPE v2, Ventana-3]",
+          "[PRO-ANT v1, Ventana-3]",
+          "[FAQ-OPE v2, Ventana-4]"
+        ]
+      },
+      {
+        "id": "GS-15",
+        "pregunta": "¿Qué mide la señal CRUCE_MONTO y qué acción corresponde si su valor es bajo?",
+        "esperado": "CAT-SEN-v3-S5",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[CAT-SEN v3, Ventana-6]",
+          "[CAT-SEN v3, Ventana-2]",
+          "[CAT-SEN v3, Ventana-5]"
+        ]
+      },
+      {
+        "id": "GS-20",
+        "pregunta": "¿Con qué puntaje de confianza se aprueba automáticamente un caso en MIRA?",
+        "esperado": "MAN-REV-v1-S1 / POL-DEC-v2-S2",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v1, Ventana-1]",
+          "[MAN-REV v1, Ventana-1]",
+          "[POL-DEC v2, Ventana-1]"
+        ]
+      },
+      {
+        "id": "GS-21",
+        "pregunta": "¿Por qué se derivó a revisión el caso C-012 si su puntaje es 86?",
+        "esperado": "POL-DEC-v2-S2 / POL-DEC-v2-S5 / BD-CU-001",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, Ventana-3]",
+          "[POL-DEC v2, Ventana-5]",
+          "[POL-DEC v2, Ventana-7]"
+        ]
+      },
+      {
+        "id": "GS-22",
+        "pregunta": "¿Una señal de fraude activa resta 20 puntos al puntaje de confianza?",
+        "esperado": "POL-DEC-v2-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, Ventana-5]",
+          "[POL-DEC v1, Ventana-3]",
+          "[CAT-SEN v3, Ventana-1]"
+        ]
+      },
+      {
+        "id": "GS-23",
+        "pregunta": "¿Quién tiene autorización para modificar los umbrales de decisión de una organización cliente?",
+        "esperado": "POL-DEC-v2-S5 / FAQ-OPE-v2-S4",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v1, Ventana-1]",
+          "[FAQ-OPE v2, Ventana-3]",
+          "[POL-DEC v2, Ventana-1]"
+        ]
+      },
+      {
+        "id": "GS-24",
+        "pregunta": "¿Qué ocurre si un módulo de análisis falla y no entrega su señal?",
+        "esperado": "POL-DEC-v2-S6",
+        "hit@1": true,
+        "hit@3": true,
+        "hit@5": true,
+        "recuperados": [
+          "[POL-DEC v2, Ventana-6]",
+          "[POL-DEC v1, Ventana-3]",
+          "[CAT-SEN v3, Ventana-1]"
+        ]
+      }
+    ]
+  },
+  "analisis_comparativo": {
+    "ganador": "Estrategia Semántica",
+    "justificacion": "La fragmentación semántica preserva íntegramente las tablas de umbrales y señales, evita cortes a mitad de cláusulas normativas y produce citas trazables con número de sección exacto (§X). Obtuvo un Recall@3 de 100.0% frente a 100.0% de la fija."
+  }
+}

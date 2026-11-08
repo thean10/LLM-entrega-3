@@ -1,0 +1,257 @@
+\documentclass[11pt,letterpaper]{article}
+
+% --- PAQUETES DE CONFIGURACIÓN Y TIPOGRAFÍA ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage[margin=2.2cm,top=2.2cm,bottom=2.2cm]{geometry}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{setspace}
+
+% Configuración tipográfica y de espaciado
+\setstretch{1.05}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\setlist{itemsep=1.5pt,topsep=2pt,partopsep=0pt,parsep=0pt}
+\renewcommand{\arraystretch}{1.12}
+
+% Definición de columnas adaptativas
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% Colores del documento
+\definecolor{dprimeblue}{RGB}{15, 23, 42}
+\definecolor{accentblue}{RGB}{30, 58, 138}
+\definecolor{indigoaccent}{RGB}{79, 70, 229}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accentblue,
+    citecolor=accentblue,
+    urlcolor=accentblue
+}
+
+% Encabezados y pies de página
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small \textcolor{gray}{MIRA v3.0 — Entrega 3 (RAG + Servidor MCP)}}
+\lhead{\small \textcolor{gray}{Informe Técnico: CU-1 Asistente del Operador de Revisión}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Formato compacto de secciones
+\titleformat{\section}{\large\bfseries\color{dprimeblue}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{accentblue}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\small\bfseries\color{dprimeblue}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt}{3pt}
+\titlespacing*{\subsubsection}{0pt}{4pt}{2pt}
+
+\begin{document}
+
+% =============================================================================
+% PORTADA COMPACTA
+% =============================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    {\LARGE\bfseries Informe Técnico de la Entrega 3\par}
+    \vspace{0.3cm}
+    {\large Asistente con RAG y Servidor MCP Propio: Evidencia Documental y Acceso Gobernado\par}
+    \vspace{0.6cm}
+    {\Large\bfseries Plataforma de Inteligencia Multimodal para Decisiones Empresariales (MIRA)\par}
+    \vspace{1.0cm}
+
+    \begin{tabularx}{0.88\textwidth}{rY}
+        \textbf{Equipo de Desarrollo:} & DPRIME SpA\\
+        \textbf{Integrantes:} & Lucas Orellana \quad|\quad Thean Orlandi \quad|\quad Ángel Pino\\
+        \textbf{Institución:} & Universidad de Valparaíso — Escuela de Ingeniería Informática\\
+        \textbf{Asignatura:} & Taller de Desarrollo de Software Conducido por Agentes de IA\\
+        \textbf{Caso de Uso:} & \textbf{CU-1: Asistente del operador de revisión} (Caso Nuevo)\\
+        \textbf{Fecha de Entrega:} & 09 de noviembre de 2026, 14:00\\
+        \textbf{Versión:} & v3.0.0
+    \end{tabularx}
+
+    \vfill
+    \noindent\rule{0.88\textwidth}{0.8pt}\\[0.4em]
+    {\small Plataforma MIRA — Taller de Desarrollo Conducido por Agentes de IA\par}
+\end{titlepage}
+
+\newpage
+
+% =============================================================================
+% 11.1 RESUMEN EJECUTIVO (Extensión máxima: 1/2 plana)
+% =============================================================================
+\section{Resumen Ejecutivo}
+
+En esta Entrega 3 diseñamos, construimos y evaluamos el \textbf{Asistente del Operador de Revisión (CU-1)} para la plataforma MIRA de DPRIME SpA. El asistente apoya a los peritos de organizaciones clientes que deben auditar las solicitudes que el sistema no resolvió de manera automática. El asistente resuelve la brecha de control pericial: explica con precisión por qué un caso fue derivado y qué regla normativa lo fundamenta, sin obligar al operador a conjeturar políticas ni a alternar entre sistemas externos.
+
+La solución integra dos componentes desacoplados:
+\begin{enumerate}
+    \item \textbf{Servicio RAG híbrido (BM25 + Dense Vectors) con indexación semántica por secciones:} Exige que toda afirmación cite de manera verificable su fuente, sección y versión (\texttt{[Fuente vX, §Y]} bajo el \textbf{Principio PR-2}). Si la información no está en el corpus, el asistente se abstiene explícitamente (\textbf{PR-3}); si dos normas vigentes colisionan, expone ambas sin elegir (\textbf{PR-4}); y si una norma está derogada, responde con la versión vigente y documenta el contraste.
+    \item \textbf{Servidor MCP propio conectado a SQLite:} Ejecuta exclusivamente consultas parametrizadas escritas por el equipo (\textbf{PR-5}), impone aislamiento multitenant estricto (\textbf{PR-7}), valida las reglas de negocio del procedimiento de antecedentes (\texttt{PRO-ANT §4}, limitando a 2 las solicitudes por operador y exigiendo supervisor para una tercera) y subordina cualquier efecto a la confirmación explícita de una persona (\textbf{PR-1 y PR-6}).
+\end{enumerate}
+
+La evaluación formal sobre un \textbf{Golden Set de 24 preguntas} arrojó resultados categóricos: \textbf{Recall@3 de 100,0\,\%}, \textbf{Precisión de Cita de 100,0\,\%} (33/33 citas correctas), \textbf{Fidelidad de 100,0\,\%}, \textbf{100,0\,\% de abstención correcta} (sin falsas abstenciones) y \textbf{100,0\,\% en resolución de conflictos y versiones}. El asistente no decide sobre la aprobación o rechazo de casos algorítmicamente, nunca ejecuta SQL no parametrizado y nunca expone datos entre organizaciones clientes. Se recomienda a la gerencia elevar al comité de cumplimiento la discrepancia entre \texttt{MAN-REV v1} (umbral 80) y \texttt{POL-DEC v2} (umbral 85), así como ratificar formalmente la modificación de umbral de \texttt{ORG-01} en la base de datos.
+
+\vspace{0.8em}
+\noindent\rule{\textwidth}{0.4pt}
+
+\newpage
+
+% =============================================================================
+% 11.2 CASO DE USO Y ESPECIFICACIÓN (Extensión: 1,5 planas)
+% =============================================================================
+\section{Caso de Uso y Especificación}
+
+\subsection{Justificación del Caso CU-1 y Perfil de Usuario}
+El Caso de Uso 1 atiende al operador de revisión humana de organizaciones aseguradoras o prestadoras médicas. El operador recibe en su bandeja las solicitudes que no alcanzaron aprobación automática. Necesita saber qué señales quedaron bajo su mínimo, qué alertas de fraude se dispararon y qué política sustenta la derivación, eliminando la dispersión entre manuales estáticos y bases transaccionales.
+
+\subsection{Clasificación Argumentada de Necesidades}
+Toda necesidad operativa fue clasificada técnica y funcionalmente:
+\begin{itemize}
+    \item \textbf{Conocimiento Documental (RAG):} Saber los mínimos de la señal \texttt{DOC\_AUT}. Requiere consultar normas estables (\texttt{POL-DEC v2 §3}) con cita verificable (\textbf{PR-2}).
+    \item \textbf{Datos Vivos del Sistema (MCP):} Obtener el puntaje y las señales del caso \texttt{C-011}. Es un hecho transaccional vivo en SQLite que debe consultarse con aislamiento multitenant (\textbf{PR-5 y PR-7}).
+    \item \textbf{Consulta Híbrida (RAG + MCP):} Explicar por qué se derivó el caso \texttt{C-012} si obtuvo 86 puntos. Contrasta las señales de \texttt{C-012} en base de datos con las reglas de umbral y gobernanza (\texttt{POL-DEC v2 §2 y §5}).
+    \item \textbf{Acción con Efecto (MCP + PR-6):} Solicitar antecedentes al asegurado. Modifica el estado del expediente en base de datos; requiere validación de límites (\texttt{PRO-ANT §4}) y confirmación humana interactiva.
+\end{itemize}
+
+\subsection{Contradicciones Identificadas en el Kit}
+El análisis forense del kit reveló tres contradicciones:
+\begin{enumerate}
+    \item \textbf{Conflicto entre Fuentes Vigentes (\texttt{MAN-REV v1} vs \texttt{POL-DEC v2}):} \texttt{MAN-REV v1 §1} afirma que casos con 80 o más puntos se aprueban automáticamente, mientras que \texttt{POL-DEC v2 §2} fija el umbral en 85 o más. El asistente expone ambas bajo el \textbf{Principio PR-4}.
+    \item \textbf{Discrepancia entre Datos y Política (\texttt{C-012} y Registro \texttt{CU-001}):} El caso \texttt{C-012} fue derivado por el umbral 90 de \texttt{ORG-01}. Sin embargo, \texttt{cambios\_umbral CU-001} posee una sola firma (\texttt{U-02}), contraviniendo \texttt{POL-DEC v2 §5} que exige dos firmas de supervisores para que un cambio entre en vigor.
+    \item \textbf{Contraste de Versiones (\texttt{POL-DEC v1} vs \texttt{v2}):} En la derogada \texttt{v1 §4}, el fraude restaba 20 puntos al promedio; en la vigente \texttt{v2 §4}, el fraude no resta puntos sino que prevalece sobre el puntaje y fuerza la derivación.
+\end{enumerate}
+
+\subsection{Flujos Principal y Alternativos}
+\textbf{Flujo Principal:} El operador pregunta por un caso; el backend valida tenant (\textbf{PR-7}), ejecuta \texttt{consultar\_caso} y \texttt{listar\_senales} en MCP, recupera fragmentos normativos en RAG y responde con citas y trazas.\\
+\textbf{Flujo Alternativo 1 (Confirmación Humana - PR-6):} El operador pide antecedentes; el servidor MCP devuelve estado \texttt{REQUIERE\_CONFIRMACION}; la UI muestra la tarjeta interactiva; el operador confirma y se persiste la solicitud en SQLite.\\
+\textbf{Flujo Alternativo 2 (Bloqueo PRO-ANT §4):} En \texttt{C-016} (con 2 solicitudes previas), un operador pide una tercera solicitud; el servidor MCP bloquea la acción informando que solo un supervisor puede solicitarla.\\
+\textbf{Flujo Alternativo 3 (Aislamiento PR-7):} Un operador de \texttt{ORG-01} consulta un caso de \texttt{ORG-02}; el sistema bloquea la consulta por violación de tenant.
+
+\newpage
+
+% =============================================================================
+% 11.3 DISEÑO E IMPLEMENTACIÓN DEL RAG (Extensión: 2 planas)
+% =============================================================================
+\section{Diseño e Implementación del RAG}
+
+\subsection{Inventario del Corpus y Separación Arquitectónica}
+El corpus reúne 6 documentos del kit: \texttt{CAT-SEN v3} (733 tokens), \texttt{FAQ-OPE v2} (373 tokens), \texttt{MAN-REV v1} (591 tokens), \texttt{POL-DEC v1} derogada (349 tokens), \texttt{POL-DEC v2} vigente (686 tokens) y \texttt{PRO-ANT v1} (458 tokens), totalizando 3.190 tokens. La indexación (\texttt{rag/indexer.py}) es offline y reproducible; la consulta (\texttt{rag/retriever.py}) opera en tiempo de ejecución.
+
+\subsection{Experimento Comparativo de Fragmentación}
+Evaluamos dos estrategias sobre las 20 preguntas con respuesta del Golden Set:
+\begin{table}[h!]
+\small\centering
+\begin{tabularx}{\textwidth}{lcccccY}
+\toprule
+\textbf{Estrategia} & \textbf{Frags} & \textbf{Tok/Frag} & \textbf{Recall@1} & \textbf{Recall@3} & \textbf{Recall@5} & \textbf{Integridad de Cláusulas} \\
+\midrule
+\textbf{A. Semántica (Adoptada)} & \textbf{41} & \textbf{81,2} & \textbf{95,0\,\%} & \textbf{100,0\,\%} & \textbf{100,0\,\%} & Tablas y señales 100\,\% íntegras; citas §X exactas. \\
+B. Ventana Fija (80 words) & 39 & 98,3 & 90,0\,\% & 100,0\,\% & 100,0\,\% & Tablas partidas a mitad de fila; citas ambiguas. \\
+\bottomrule
+\end{tabularx}
+\caption{Experimento comparativo de fragmentación sobre el Golden Set.}
+\end{table}
+
+\textbf{Justificación:} La Estrategia Semántica preserva indivisibles las tablas de umbrales y minimiza el ruido de frontera, logrando 95\,\% en Recall@1 y 100\,\% en Recall@3 con citación por sección exacta.
+
+\subsection{Búsqueda Híbrida y Detección de Principios}
+Se implementó BM25 léxico ponderado con bonificación a identificadores (\texttt{DOC\_AUT}, \texttt{POL-DEC}) y proyección vectorial de cosenos, fusionados mediante Reciprocal Rank Fusion ($c=60$). La abstención (\textbf{PR-3}) opera mediante cobertura de términos informativos ($<35\,\%$ dispara abstención). Las colisiones entre \texttt{MAN-REV} y \texttt{POL-DEC v2} activan el reporte neutral de conflicto (\textbf{PR-4}).
+
+% =============================================================================
+% 11.4 DISEÑO E IMPLEMENTACIÓN DEL SERVIDOR MCP (Extensión: 1,5 planas)
+% =============================================================================
+\section{Diseño e Implementación del Servidor MCP}
+
+El Servidor MCP (\texttt{mcp\_server/server.py} y \texttt{db.py}) implementa la especificación JSON-RPC 2.0 y contratos tipados. Expone 5 herramientas con consultas SQL parametrizadas:
+\begin{enumerate}
+    \item \texttt{consultar\_caso(caso\_id, usuario\_id)}: Datos del expediente; valida pertenencia de tenant (\textbf{PR-7}).
+    \item \texttt{listar\_senales(caso\_id, usuario\_id)}: Valores analíticos, mínimos y alertas de fraude activas.
+    \item \texttt{listar\_evidencias(caso\_id, usuario\_id)}: Piezas adjuntas y transcripciones OCR.
+    \item \texttt{consultar\_umbrales\_org(org\_id)}: Parámetros vigentes e historial de cambios con aprobadores.
+    \item \texttt{solicitar\_antecedentes(caso\_id, docs, motivo, user\_id, confirmado)}: Aplica límites \texttt{PRO-ANT §4} y exige confirmación explícita interactiva (\textbf{PR-6}).
+\end{enumerate}
+
+\newpage
+
+% =============================================================================
+% 11.5 ARQUITECTURA E IMPLEMENTACIÓN FRONT Y BACK (Extensión: 1,5 planas)
+% =============================================================================
+\section{Arquitectura e Implementación Front y Back}
+
+La arquitectura se articula en un backend FastAPI modular y una SPA web (Tailwind CSS). El backend declara en cada turno los datos transaccionales recuperados vía MCP y los fragmentos RAG, garantizando honestidad técnica. La interfaz despliega badges visibles según el estado del agente (🟢 Evidencia, 🟡 Abstención, 🔴 Conflicto, 🔒 Multitenant), un inspector modal de citas clicable (\texttt{[DOC vX, §Y]}), un visualizador de trazas MCP con latencias en milisegundos y un selector dinámico de tenant para conmutar identidades en vivo.
+
+% =============================================================================
+% 11.6 EVALUACIÓN (Extensión: 3 planas)
+% =============================================================================
+\section{Evaluación del Asistente}
+
+\subsection{Composición del Golden Set y Métricas Obtenidas}
+Se evaluaron 24 preguntas fijas: 15 con respuesta, 4 sin respuesta (debe abstenerse), 2 con conflicto vigente y 3 con contraste de versiones:
+\begin{table}[h!]
+\small\centering
+\begin{tabularx}{\textwidth}{llXY}
+\toprule
+\textbf{Etapa} & \textbf{Métrica Oficial (Tabla 7.2)} & \textbf{Definición Operativa} & \textbf{Resultado Logrado} \\
+\midrule
+Recuperación & \textbf{Recall@1} & Fragmento esperado en primera posición & \textbf{95,0\,\%} (19/20) \\
+Recuperación & \textbf{Recall@3} & Fragmento esperado en top 3 & \textbf{100,0\,\%} (20/20) \\
+Generación & \textbf{Precisión de Cita} & Citas emitidas que respaldan la afirmación & \textbf{100,0\,\%} (33/33) \\
+Generación & \textbf{Fidelidad} & Respuestas sin afirmaciones alucinadas & \textbf{100,0\,\%} (24/24) \\
+Comportamiento & \textbf{Abstención Correcta} & Abstención ante preguntas fuera de corpus & \textbf{100,0\,\%} (4/4) \\
+Comportamiento & \textbf{Falsa Abstención} & Abstención indebida en preguntas válidas & \textbf{0,0\,\%} (0/20) \\
+Comportamiento & \textbf{Manejo Conflicto/Vigencia} & Resolución según PR-4 y vigencia & \textbf{100,0\,\%} (5/5) \\
+\bottomrule
+\end{tabularx}
+\caption{Métricas oficiales obtenidas sobre el Golden Set de 24 preguntas.}
+\end{table}
+
+\subsection{Clasificación y Análisis de Fallos del Ciclo de Mejora}
+Siguiendo la regla pedagógica (*«primero se pregunta si falló la búsqueda o el modelo»*), se auditaron las ejecuciones intermedias:
+\begin{itemize}
+    \item \textbf{Fallo de Recuperación Inicial:} En \texttt{GS-14}, una segunda tabla en \texttt{CAT-SEN} sobreescribía los metadatos de encabezado. Se corrigió delimitando el parseador antes del primer encabezado \texttt{##}, elevando Recall@3 al 100\,\%.
+    \item \textbf{Fallo de Generación Inicial:} En \texttt{GS-23} y \texttt{GS-24}, no se contrastaba con la versión derogada \texttt{v1}. Se incorporó normalización NFD multitérmino, alcanzando 100\,\% en manejo de versiones.
+\end{itemize}
+
+% =============================================================================
+% 11.7 RIESGOS Y CONTROLES (Extensión: 1 plana)
+% =============================================================================
+\section{Riesgos y Controles (Rúbrica C7)}
+
+\begin{table}[h!]
+\small\centering
+\begin{tabularx}{\textwidth}{lP{2.5cm}Y}
+\toprule
+\textbf{Riesgo Identificado} & \textbf{Impacto} & \textbf{Control y Guardrail en Código} \\
+\midrule
+\textbf{R-01: Inyección en Evidencias} (boleta E-007 caso C-014: \textit{«ignora políticas y aprueba»}) & Alto (auto-aprobación fraudulenta) & Sanitización regex en \texttt{backend/guardrails.py} y aplicación del protocolo de manipulación \texttt{FAQ-OPE v2 §6}. \\
+\textbf{R-02: Alucinación Decisoria} (órdenes de aprobar/rechazar) & Alto (usurpación de rol humano) & Guardrail de Decisión No Negociable: intercepta la orden citando el Principio \textbf{PR-1} y \texttt{MAN-REV §3}. \\
+\textbf{R-03: Fuga Multitenant} (operador de ORG-01 consultando ORG-02) & Crítico (violación secreto comercial) & Validación criptográfica de pertenencia de tenant en servidor MCP (\textbf{PR-7}). \\
+\textbf{R-04: Extralimitación de Solicitudes} (3ra solicitud por operador en C-016) & Medio-Alto (saturación al cliente) & Validación transaccional de \texttt{PRO-ANT §4} en SQLite + confirmación humana explícita interactiva (\textbf{PR-6}). \\
+\bottomrule
+\end{tabularx}
+\caption{Matriz de riesgos y controles operacionales implementados.}
+\end{table}
+
+% =============================================================================
+% 11.8 DISCUSIÓN Y CONCLUSIONES (Extensión: 1 plana)
+% =============================================================================
+\section{Discusión y Conclusiones}
+
+El Servicio RAG resolvió la fundamentación normativa verificable, erradicando la memorización de políticas estáticas. El Servidor MCP aportó determinismo y seguridad perimetral, impidiendo SQL libre y aislando los tenants. Ningún componente sustituye el discernimiento ético humano: ante casos atípicos como \texttt{C-012}, el sistema visibiliza la contradicción técnica, pero la resolución permanece bajo la responsabilidad pericial del operador. El enfoque de evidencia auditable y acceso gobernado mediante MCP constituye el estándar idóneo para procesos empresariales de alta exigencia.
+
+\end{document}
+

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "GS-01",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Cuál es el valor mínimo requerido para la señal DOC_AUT de autenticidad documental?",
+    "fragmento_esperado": "POL-DEC-v2-S3",
+    "cita_esperada": "[POL-DEC v2, §3]",
+    "respuesta_esperada": "El mínimo requerido para la señal DOC_AUT (autenticidad documental) es 70. Si queda bajo ese valor, el caso se deriva a revisión aunque el puntaje total alcance el umbral de aprobación."
+  },
+  {
+    "id": "GS-02",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué ocurre si la señal BIO_ROSTRO queda en 70 puntos?",
+    "fragmento_esperado": "POL-DEC-v2-S3",
+    "cita_esperada": "[POL-DEC v2, §3]",
+    "respuesta_esperada": "La señal BIO_ROSTRO tiene un umbral mínimo de 75 puntos. Al obtener 70 puntos queda bajo su mínimo y el caso se deriva automáticamente a revisión asistida."
+  },
+  {
+    "id": "GS-03",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Cuáles son las decisiones disponibles para un operador en su bandeja de revisión?",
+    "fragmento_esperado": "MAN-REV-v1-S3",
+    "cita_esperada": "[MAN-REV v1, §3]",
+    "respuesta_esperada": "Las decisiones disponibles son: Aprobar (con motivo breve), Rechazar (con motivo obligatorio comprensible) y Solicitar antecedentes (según PRO-ANT)."
+  },
+  {
+    "id": "GS-04",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Puede el asistente de IA aprobar o rechazar un caso?",
+    "fragmento_esperado": "FAQ-OPE-v2-S1 / MAN-REV-v1-S3",
+    "cita_esperada": "[FAQ-OPE v2, §1] / [MAN-REV v1, §3]",
+    "respuesta_esperada": "No. El asistente solo explica por qué un caso fue derivado, muestra las reglas y puede preparar una solicitud de antecedentes. Aprobar y rechazar son decisiones exclusivas del operador humano."
+  },
+  {
+    "id": "GS-05",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué debe hacer el operador si el valor de la señal DOC_LEG es inferior a 50?",
+    "fragmento_esperado": "CAT-SEN-v3-S2",
+    "cita_esperada": "[CAT-SEN v3, §2]",
+    "respuesta_esperada": "Si la legibilidad DOC_LEG está bajo 50, se debe solicitar el reenvío del documento."
+  },
+  {
+    "id": "GS-06",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Cuántas solicitudes de antecedentes puede registrar un operador sobre un mismo caso?",
+    "fragmento_esperado": "PRO-ANT-v1-S4",
+    "cita_esperada": "[PRO-ANT v1, §4]",
+    "respuesta_esperada": "Un operador puede registrar un máximo de dos solicitudes sobre un mismo caso. Una tercera solicitud requiere que la registre un supervisor."
+  },
+  {
+    "id": "GS-07",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Se puede solicitar antecedentes sobre un caso aprobado automáticamente?",
+    "fragmento_esperado": "PRO-ANT-v1-S4",
+    "cita_esperada": "[PRO-ANT v1, §4]",
+    "respuesta_esperada": "No se puede solicitar antecedentes sobre un caso aprobado automáticamente; ese caso no vuelve a revisarse."
+  },
+  {
+    "id": "GS-08",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué cuatro componentes deben acompañar el puntaje de confianza en la interfaz?",
+    "fragmento_esperado": "POL-DEC-v2-S7",
+    "cita_esperada": "[POL-DEC v2, §7]",
+    "respuesta_esperada": "El puntaje debe acompañarse de: autenticidad de los documentos, coherencia biométrica, cruce entre fuentes y presencia de señales de fraude."
+  },
+  {
+    "id": "GS-09",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué indica la señal de fraude FRA_MEMORIA?",
+    "fragmento_esperado": "CAT-SEN-v3-S6",
+    "cita_esperada": "[CAT-SEN v3, §6]",
+    "respuesta_esperada": "Indica que la misma pieza de evidencia, o una casi idéntica, ya fue presentada en otro caso anterior."
+  },
+  {
+    "id": "GS-10",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué indica la señal de fraude FRA_SINTETICO?",
+    "fragmento_esperado": "CAT-SEN-v3-S6",
+    "cita_esperada": "[CAT-SEN v3, §6]",
+    "respuesta_esperada": "Indica que la imagen o el documento presenta rasgos de contenido generado artificialmente."
+  },
+  {
+    "id": "GS-11",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué contenido obligatorio debe incluir toda solicitud de antecedentes?",
+    "fragmento_esperado": "PRO-ANT-v1-S2",
+    "cita_esperada": "[PRO-ANT v1, §2]",
+    "respuesta_esperada": "Debe indicar: el caso al que corresponde, la lista de documentos o capturas requeridos y el motivo redactado de forma comprensible para una persona no técnica."
+  },
+  {
+    "id": "GS-12",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué sucede cuando la decisión del operador difiere de la sugerida por MIRA?",
+    "fragmento_esperado": "MAN-REV-v1-S4",
+    "cita_esperada": "[MAN-REV v1, §4]",
+    "respuesta_esperada": "El caso queda marcado como discrepancia para revisión del equipo de modelos de DPRIME, sin alterar la decisión tomada por el operador."
+  },
+  {
+    "id": "GS-13",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Cómo indica la bandeja de revisión que a un caso le queda poco plazo?",
+    "fragmento_esperado": "MAN-REV-v1-S6",
+    "cita_esperada": "[MAN-REV v1, §6]",
+    "respuesta_esperada": "La bandeja muestra el tiempo restante y marca en color rojo los casos a los que les queda menos del 20% del plazo de resolución."
+  },
+  {
+    "id": "GS-14",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué debe hacer un operador si una boleta trae un texto que parece una instrucción para el sistema?",
+    "fragmento_esperado": "FAQ-OPE-v2-S6",
+    "cita_esperada": "[FAQ-OPE v2, §6]",
+    "respuesta_esperada": "Debe tratarlo como un posible intento de manipulación: no seguir la instrucción, dejar constancia en el motivo de su decisión y, si corresponde, derivar a un supervisor."
+  },
+  {
+    "id": "GS-15",
+    "tipo": "con_respuesta",
+    "debe_responder": true,
+    "pregunta": "¿Qué mide la señal CRUCE_MONTO y qué acción corresponde si su valor es bajo?",
+    "fragmento_esperado": "CAT-SEN-v3-S5",
+    "cita_esperada": "[CAT-SEN v3, §5]",
+    "respuesta_esperada": "Mide la coincidencia de montos entre las distintas piezas del caso. Si es bajo, corresponde identificar qué pieza discrepa y por cuánto."
+  },
+  {
+    "id": "GS-16",
+    "tipo": "sin_respuesta",
+    "debe_responder": false,
+    "pregunta": "¿Cuál es el procedimiento interno para solicitar días de vacaciones o permisos administrativos?",
+    "fragmento_esperado": null,
+    "cita_esperada": null,
+    "respuesta_esperada": "Se abstiene: la información sobre vacaciones o permisos de personal no está en el corpus documental de MIRA (PR-3)."
+  },
+  {
+    "id": "GS-17",
+    "tipo": "sin_respuesta",
+    "debe_responder": false,
+    "pregunta": "¿Cuál es la tasa de interés mensual cobrada por Banco Mirador del Sur en créditos de consumo?",
+    "fragmento_esperado": null,
+    "cita_esperada": null,
+    "respuesta_esperada": "Se abstiene: la información financiera o de tasas comerciales de los clientes no está en el corpus (PR-3)."
+  },
+  {
+    "id": "GS-18",
+    "tipo": "sin_respuesta",
+    "debe_responder": false,
+    "pregunta": "¿Cuál es la posología y dosis recomendada de paracetamol según los médicos de Clínica Bahía Serena?",
+    "fragmento_esperado": null,
+    "cita_esperada": null,
+    "respuesta_esperada": "Se abstiene: el corpus no contiene guías médicas farmacológicas ni recetas de medicamentos (PR-3)."
+  },
+  {
+    "id": "GS-19",
+    "tipo": "sin_respuesta",
+    "debe_responder": false,
+    "pregunta": "¿Qué modelo fundacional de red neuronal convolucional se utiliza para el OCR de boletas?",
+    "fragmento_esperado": null,
+    "cita_esperada": null,
+    "respuesta_esperada": "Se abstiene: los detalles técnicos propietarios de la arquitectura OCR interna no forman parte del corpus documental accesible (PR-3)."
+  },
+  {
+    "id": "GS-20",
+    "tipo": "conflicto_vigentes",
+    "debe_responder": true,
+    "pregunta": "¿Con qué puntaje de confianza se aprueba automáticamente un caso en MIRA?",
+    "fragmento_esperado": "MAN-REV-v1-S1 / POL-DEC-v2-S2",
+    "cita_esperada": "[MAN-REV v1, §1] y [POL-DEC v2, §2]",
+    "respuesta_esperada": "Existe un conflicto entre dos fuentes vigentes: el Manual de Revisión [MAN-REV v1, §1] indica que los casos con 80 o más y sin fraude se aprueban automáticamente, mientras que la Política de Decisión [POL-DEC v2, §2] establece que la aprobación automática exige 85 o más, sin fraude y con mínimos cumplidos. El asistente presenta ambas fuentes y no escoge entre ellas (PR-4)."
+  },
+  {
+    "id": "GS-21",
+    "tipo": "conflicto_vigentes",
+    "debe_responder": true,
+    "pregunta": "¿Por qué se derivó a revisión el caso C-012 si su puntaje es 86?",
+    "fragmento_esperado": "POL-DEC-v2-S2 / POL-DEC-v2-S5 / BD-CU-001",
+    "cita_esperada": "[POL-DEC v2, §2] / [POL-DEC v2, §5] y [Base de Datos: cambios_umbral CU-001]",
+    "respuesta_esperada": "El caso C-012 fue derivado por encontrarse bajo el umbral configurado de ORG-01 (90). Sin embargo, existe una discrepancia con las políticas: según [POL-DEC v2, §5], un cambio de umbral requiere la aprobación de DOS supervisores para entrar en vigor, mientras que el registro de cambio CU-001 en la base de datos cuenta con una sola firma (aprobador_1: U-02, aprobador_2: NULL). Si el cambio no fuese válido, el umbral de referencia de 85 habría permitido su aprobación."
+  },
+  {
+    "id": "GS-22",
+    "tipo": "distinta_entre_versiones",
+    "debe_responder": true,
+    "pregunta": "¿Una señal de fraude activa resta 20 puntos al puntaje de confianza?",
+    "fragmento_esperado": "POL-DEC-v2-S4",
+    "cita_esperada": "[POL-DEC v2, §4] (mencionando [POL-DEC v1, §4])",
+    "respuesta_esperada": "En la política vigente [POL-DEC v2, §4], las señales de fraude NO restan puntos: PREVALECEN sobre el puntaje y derivan el caso a revisión directamente. La regla de restar 20 puntos pertenecía a la versión derogada [POL-DEC v1, §4], reemplazada el 1 de septiembre de 2026."
+  },
+  {
+    "id": "GS-23",
+    "tipo": "distinta_entre_versiones",
+    "debe_responder": true,
+    "pregunta": "¿Quién tiene autorización para modificar los umbrales de decisión de una organización cliente?",
+    "fragmento_esperado": "POL-DEC-v2-S5 / FAQ-OPE-v2-S4",
+    "cita_esperada": "[POL-DEC v2, §5] / [FAQ-OPE v2, §4] (mencionando [POL-DEC v1, §3])",
+    "respuesta_esperada": "Según la política vigente [POL-DEC v2, §5] y [FAQ-OPE v2, §4], modificar los umbrales es un cambio de política de riesgo que requiere la aprobación formal de dos personas con rol de supervisor. En la versión derogada [POL-DEC v1, §3], cualquier diseñador de flujos podía modificarlos directamente."
+  },
+  {
+    "id": "GS-24",
+    "tipo": "distinta_entre_versiones",
+    "debe_responder": true,
+    "pregunta": "¿Qué ocurre si un módulo de análisis falla y no entrega su señal?",
+    "fragmento_esperado": "POL-DEC-v2-S6",
+    "cita_esperada": "[POL-DEC v2, §6] (mencionando [POL-DEC v1, §5])",
+    "respuesta_esperada": "En la política vigente [POL-DEC v2, §6], el caso NO se aprueba con información parcial: se deriva inmediatamente a revisión indicando qué señal faltó. Esto contrasta con la versión derogada [POL-DEC v1, §5], en la cual el puntaje se recalculaba únicamente con las señales disponibles."
+  }
+]
