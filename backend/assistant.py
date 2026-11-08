@@ -7,7 +7,7 @@ Garantiza los Principios No Negociables PR-1 a PR-7 y el control de riesgos C7.
 import os
 import re
 import time
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 from mcp_server.tools import execute_tool, MCP_TOOLS_SPEC
 from rag.retriever import MIRARetriever
 from backend.guardrails import MIRAGuardrails
